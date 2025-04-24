@@ -1,3 +1,4 @@
+[English](./readme_en.md)  
 # 背景
 在X11环境下，实现防截屏功能。
 
