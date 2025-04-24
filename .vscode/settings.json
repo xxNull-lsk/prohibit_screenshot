@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "*.toml": "toml",
+        "xdamage.h": "c",
+        "xlib.h": "c",
+        "xutil.h": "c",
+        "list": "cpp",
+        "set": "cpp",
+        "ostream": "c",
+        "prohibit_screenshot.h": "c",
+        "xshm.h": "c",
+        "save_png.h": "c"
+    }
+}

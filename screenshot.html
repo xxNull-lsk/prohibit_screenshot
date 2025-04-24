@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<body>
+		<div style="width: 100%; height: 100%; position: relative; top: 0; left: 0; z-index: 1; overflow-y: hidden;">
+			<video id="video" style="width: 1600; height: 900; position: absolute; top: 0; left: 0;" autoplay></video>
+		</div>
+        <center>
+			<button onclick="screenshoutBtnClick()" style="width: 64px;height: 32px;font-size:larger">截图</button>
+        </center>
+		<div style="width: 100%; height: 100%; z-index: 2;">
+            <br />
+			<img id="showScreenShout" />
+		</div>
+	</body>
+
+	<script>
+		function init() {
+			if (window.screen) {
+				var video = document.getElementById('video');
+				video.style.width = window.screen.width + "px";
+				video.style.height = window.screen.height + "px";
+			}
+		}
+
+		init();
+
+		const displayMediaOptions = {
+			video: {
+				cursor: "always"
+			},
+			audio: false
+		};
+		let videoElem = document.getElementById("video");
+
+		function screenshoutBtnClick() {
+			navigator.mediaDevices.getDisplayMedia(displayMediaOptions).then(stream => {
+				videoElem.srcObject = stream;
+				setTimeout(() => {
+					var canvas = document.createElement("canvas");
+					canvas.width = videoElem.clientWidth;
+					canvas.height = videoElem.clientHeight;
+					canvas.getContext("2d").drawImage(videoElem, 
+                        0, 0, canvas.width, canvas.height,
+                        0, 0, canvas.width, canvas.height
+					);
+					var dataURL = canvas.toDataURL("image/png");
+					document.getElementById('showScreenShout').src = dataURL;
+
+					let tracks = videoElem.srcObject.getTracks();
+					tracks.forEach(track => track.stop());
+					videoElem.srcObject = null;
+				}, 200)
+			}).finally(() => {
+
+			});
+		}
+	</script>
+</html>
+
